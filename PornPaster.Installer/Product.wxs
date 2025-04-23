@@ -21,37 +21,68 @@
       <ComponentRef Id="RuntimeConfig"/>
       <ComponentRef Id="ApplicationShortcut"/>
       <ComponentRef Id="ApplicationShortcutDesktop"/>
+      <ComponentRef Id="CleanupComponent"/>
     </Feature>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="LocalAppDataFolder">
         <Directory Id="APPLICATIONFOLDER" Name="PornPaster">
           <Component Id="MainExecutable" Guid="*">
+            <RegistryValue Root="HKCU" 
+                          Key="Software\MeepsKitten\PornPaster\Components" 
+                          Name="MainExecutable" 
+                          Type="integer" 
+                          Value="1" 
+                          KeyPath="yes"/>
             <File Id="PornPasterEXE" 
                   Name="PornPaster.exe" 
-                  Source="$(var.BinDir)\PornPaster.exe" 
-                  KeyPath="yes"/>
+                  Source="$(var.BinDir)\PornPaster.exe"/>
           </Component>
           
           <Component Id="MainLibrary" Guid="*">
+            <RegistryValue Root="HKCU" 
+                          Key="Software\MeepsKitten\PornPaster\Components" 
+                          Name="MainLibrary" 
+                          Type="integer" 
+                          Value="1" 
+                          KeyPath="yes"/>
             <File Id="PornPasterDLL" 
                   Name="PornPaster.dll" 
-                  Source="$(var.BinDir)\PornPaster.dll"
-                  KeyPath="yes"/>
+                  Source="$(var.BinDir)\PornPaster.dll"/>
           </Component>
           
           <Component Id="DepsJson" Guid="*">
+            <RegistryValue Root="HKCU" 
+                          Key="Software\MeepsKitten\PornPaster\Components" 
+                          Name="DepsJson" 
+                          Type="integer" 
+                          Value="1" 
+                          KeyPath="yes"/>
             <File Id="PornPasterDepsJson" 
                   Name="PornPaster.deps.json" 
-                  Source="$(var.BinDir)\PornPaster.deps.json"
-                  KeyPath="yes"/>
+                  Source="$(var.BinDir)\PornPaster.deps.json"/>
           </Component>
           
           <Component Id="RuntimeConfig" Guid="*">
+            <RegistryValue Root="HKCU" 
+                          Key="Software\MeepsKitten\PornPaster\Components" 
+                          Name="RuntimeConfig" 
+                          Type="integer" 
+                          Value="1" 
+                          KeyPath="yes"/>
             <File Id="PornPasterRuntimeConfigJson" 
                   Name="PornPaster.runtimeconfig.json" 
-                  Source="$(var.BinDir)\PornPaster.runtimeconfig.json"
-                  KeyPath="yes"/>
+                  Source="$(var.BinDir)\PornPaster.runtimeconfig.json"/>
+          </Component>
+
+          <Component Id="CleanupComponent" Guid="*">
+            <RegistryValue Root="HKCU" 
+                          Key="Software\MeepsKitten\PornPaster\Components" 
+                          Name="Cleanup" 
+                          Type="integer" 
+                          Value="1" 
+                          KeyPath="yes"/>
+            <RemoveFolder Id="APPLICATIONFOLDER" On="uninstall"/>
           </Component>
         </Directory>
       </Directory>
@@ -66,8 +97,8 @@
                       WorkingDirectory="APPLICATIONFOLDER"/>
             <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
             <RegistryValue Root="HKCU" 
-                          Key="Software\MeepsKitten\PornPaster" 
-                          Name="installed_startmenu" 
+                          Key="Software\MeepsKitten\PornPaster\Components" 
+                          Name="StartMenuShortcut" 
                           Type="integer" 
                           Value="1" 
                           KeyPath="yes"/>
@@ -84,8 +115,8 @@
                     WorkingDirectory="APPLICATIONFOLDER"/>
           <RemoveFolder Id="DesktopFolder" On="uninstall"/>
           <RegistryValue Root="HKCU" 
-                        Key="Software\MeepsKitten\PornPaster" 
-                        Name="installed_desktop" 
+                        Key="Software\MeepsKitten\PornPaster\Components" 
+                        Name="DesktopShortcut" 
                         Type="integer" 
                         Value="1" 
                         KeyPath="yes"/>
