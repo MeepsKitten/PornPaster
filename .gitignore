@@ -1,21 +1,39 @@
-## .NET Core
+# .NET Core
 bin/
 obj/
 *.user
 *.userosscache
 *.suo
 *.userprefs
+*.csproj.user
+*.csproj.user.*
+*.user.*
+*.user.*.*
 
-## Visual Studio
+# Visual Studio
 .vs/
-*.vspscc
-*.vssscc
-.builds
-*.pidb
-*.svclog
-*.log
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
 
-## Build results
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
@@ -29,4 +47,16 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-[Ll]ogs/ 
+[Ll]ogs/
+
+# Visual Studio cache/options directory
+.vs/
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Rider
+.idea/
+*.sln.iml 
