@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <Product Id="*" 
            Name="PornPaster" 
            Language="1033" 
@@ -18,6 +19,18 @@
                   RemoveFeatures="ALL"/>
     
     <MediaTemplate EmbedCab="yes"/>
+
+    <!-- Set the data folder property -->
+    <Property Id="DATAFOLDER">
+      <RegistrySearch Id="DataFolderRegSearch" 
+                      Root="HKCU" 
+                      Key="Software\MeepsKitten\PornPaster" 
+                      Name="DataPath" 
+                      Type="raw"/>
+    </Property>
+    <SetProperty Id="DATAFOLDER" Value="[LocalAppDataFolder]PornPaster_Data" After="LaunchConditions">
+      NOT DATAFOLDER
+    </SetProperty>
 
     <Feature Id="ProductFeature" Title="PornPaster" Level="1">
       <ComponentRef Id="MainExecutable"/>
@@ -105,6 +118,11 @@
                           Type="integer" 
                           Value="1" 
                           KeyPath="yes"/>
+            <RegistryValue Root="HKCU"
+                          Key="Software\MeepsKitten\PornPaster"
+                          Name="DataPath"
+                          Type="string"
+                          Value="[DATAFOLDER]"/>
             <RemoveFolder Id="DATAFOLDER" On="uninstall"/>
             <util:RemoveFolderEx Id="RemoveDataFolder" 
                                 On="uninstall" 
