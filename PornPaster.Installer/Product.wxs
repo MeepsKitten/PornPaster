@@ -27,7 +27,7 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="LocalAppDataFolder">
         <Directory Id="APPLICATIONFOLDER" Name="PornPaster">
-          <Component Id="MainExecutable" Guid="*">
+          <Component Id="MainExecutable" Guid="33333333-3333-3333-3333-333333333333">
             <RegistryValue Root="HKCU" 
                           Key="Software\MeepsKitten\PornPaster\Components" 
                           Name="MainExecutable" 
@@ -39,7 +39,7 @@
                   Source="$(var.BinDir)\PornPaster.exe"/>
           </Component>
           
-          <Component Id="MainLibrary" Guid="*">
+          <Component Id="MainLibrary" Guid="44444444-4444-4444-4444-444444444444">
             <RegistryValue Root="HKCU" 
                           Key="Software\MeepsKitten\PornPaster\Components" 
                           Name="MainLibrary" 
@@ -51,7 +51,7 @@
                   Source="$(var.BinDir)\PornPaster.dll"/>
           </Component>
           
-          <Component Id="DepsJson" Guid="*">
+          <Component Id="DepsJson" Guid="55555555-5555-5555-5555-555555555555">
             <RegistryValue Root="HKCU" 
                           Key="Software\MeepsKitten\PornPaster\Components" 
                           Name="DepsJson" 
@@ -63,7 +63,7 @@
                   Source="$(var.BinDir)\PornPaster.deps.json"/>
           </Component>
           
-          <Component Id="RuntimeConfig" Guid="*">
+          <Component Id="RuntimeConfig" Guid="66666666-6666-6666-6666-666666666666">
             <RegistryValue Root="HKCU" 
                           Key="Software\MeepsKitten\PornPaster\Components" 
                           Name="RuntimeConfig" 
@@ -75,7 +75,7 @@
                   Source="$(var.BinDir)\PornPaster.runtimeconfig.json"/>
           </Component>
 
-          <Component Id="CleanupComponent" Guid="*">
+          <Component Id="CleanupComponent" Guid="77777777-7777-7777-7777-777777777777">
             <RegistryValue Root="HKCU" 
                           Key="Software\MeepsKitten\PornPaster\Components" 
                           Name="Cleanup" 
