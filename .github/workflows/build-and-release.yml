@@ -27,10 +27,21 @@ jobs:
     - name: Publish
       run: dotnet publish -c Release -o publish --no-build
       
+    - name: Create Tag
+      id: create_tag
+      run: |
+        $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+        $sha = $env:GITHUB_SHA.Substring(0,7)
+        $tag = "v1.0.0-$timestamp-$sha"
+        echo "tag=$tag" >> $env:GITHUB_ENV
+        git tag $tag
+        git push origin $tag
+      
     - name: Create Release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: ${{ env.tag }}
         files: |
           publish/**
         generate_release_notes: true
