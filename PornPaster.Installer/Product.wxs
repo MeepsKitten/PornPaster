@@ -11,7 +11,12 @@
              InstallScope="perUser" 
              Platform="x64"/>
 
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."/>
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+                  Schedule="afterInstallValidate"
+                  AllowDowngrades="no"
+                  AllowSameVersionUpgrades="no"
+                  RemoveFeatures="ALL"/>
+    
     <MediaTemplate EmbedCab="yes"/>
 
     <Feature Id="ProductFeature" Title="PornPaster" Level="1">
@@ -22,6 +27,7 @@
       <ComponentRef Id="ApplicationShortcut"/>
       <ComponentRef Id="ApplicationShortcutDesktop"/>
       <ComponentRef Id="CleanupComponent"/>
+      <ComponentRef Id="DataFolderCleanup"/>
     </Feature>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
@@ -37,6 +43,7 @@
             <File Id="PornPasterEXE" 
                   Name="PornPaster.exe" 
                   Source="$(var.BinDir)\PornPaster.exe"/>
+            <RemoveFile Id="RemoveExe" Name="PornPaster.exe" On="uninstall"/>
           </Component>
           
           <Component Id="MainLibrary" Guid="44444444-4444-4444-4444-444444444444">
@@ -49,6 +56,7 @@
             <File Id="PornPasterDLL" 
                   Name="PornPaster.dll" 
                   Source="$(var.BinDir)\PornPaster.dll"/>
+            <RemoveFile Id="RemoveDll" Name="PornPaster.dll" On="uninstall"/>
           </Component>
           
           <Component Id="DepsJson" Guid="55555555-5555-5555-5555-555555555555">
@@ -61,6 +69,7 @@
             <File Id="PornPasterDepsJson" 
                   Name="PornPaster.deps.json" 
                   Source="$(var.BinDir)\PornPaster.deps.json"/>
+            <RemoveFile Id="RemoveDepsJson" Name="PornPaster.deps.json" On="uninstall"/>
           </Component>
           
           <Component Id="RuntimeConfig" Guid="66666666-6666-6666-6666-666666666666">
@@ -73,6 +82,7 @@
             <File Id="PornPasterRuntimeConfigJson" 
                   Name="PornPaster.runtimeconfig.json" 
                   Source="$(var.BinDir)\PornPaster.runtimeconfig.json"/>
+            <RemoveFile Id="RemoveRuntimeConfig" Name="PornPaster.runtimeconfig.json" On="uninstall"/>
           </Component>
 
           <Component Id="CleanupComponent" Guid="77777777-7777-7777-7777-777777777777">
@@ -83,6 +93,22 @@
                           Value="1" 
                           KeyPath="yes"/>
             <RemoveFolder Id="APPLICATIONFOLDER" On="uninstall"/>
+          </Component>
+        </Directory>
+
+        <!-- Add cleanup for the app's data folder -->
+        <Directory Id="DATAFOLDER" Name="PornPaster_Data">
+          <Component Id="DataFolderCleanup" Guid="88888888-8888-8888-8888-888888888888">
+            <RegistryValue Root="HKCU" 
+                          Key="Software\MeepsKitten\PornPaster\Components" 
+                          Name="DataFolder" 
+                          Type="integer" 
+                          Value="1" 
+                          KeyPath="yes"/>
+            <RemoveFolder Id="DATAFOLDER" On="uninstall"/>
+            <util:RemoveFolderEx Id="RemoveDataFolder" 
+                                On="uninstall" 
+                                Property="DATAFOLDER"/>
           </Component>
         </Directory>
       </Directory>
@@ -125,9 +151,16 @@
     </Directory>
 
     <UI>
-      <UIRef Id="WixUI_InstallDir"/>
-      <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONFOLDER"/>
+      <UIRef Id="WixUI_Minimal"/>
       <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="Thank you for installing PornPaster!"/>
     </UI>
+
+    <InstallExecuteSequence>
+      <RemoveRegistryValues Action="RemoveRegistryValues" Before="RemoveFiles"/>
+      <RemoveFiles Action="RemoveFiles" Before="RemoveFolders"/>
+      <RemoveFolders Action="RemoveFolders" Before="InstallFinalize"/>
+    </InstallExecuteSequence>
+
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\license.rtf"/>
   </Product>
 </Wix> 
