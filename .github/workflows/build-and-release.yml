@@ -18,6 +18,14 @@ jobs:
       with:
         dotnet-version: '8.0.x'
         
+    - name: Setup WiX
+      shell: pwsh
+      run: |
+        Invoke-WebRequest -Uri "https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip" -OutFile "wix.zip"
+        Expand-Archive -Path "wix.zip" -DestinationPath "wix"
+        $wixPath = Join-Path -Path $pwd -ChildPath "wix"
+        echo "$wixPath" >> $env:GITHUB_PATH
+        
     - name: Restore dependencies
       run: dotnet restore
       
@@ -27,14 +35,26 @@ jobs:
     - name: Publish
       run: dotnet publish -c Release -o publish --no-build
       
+    - name: Build Installer
+      shell: pwsh
+      run: |
+        $wixPath = Join-Path -Path $pwd -ChildPath "wix"
+        $env:Path = "$wixPath;" + $env:Path
+        
+        # Build the installer
+        & "$wixPath\candle.exe" -dBinDir="$pwd\publish" "PornPaster.Installer\Product.wxs" -out "installer.wixobj"
+        if ($LASTEXITCODE -ne 0) { throw "Candle.exe failed" }
+        
+        & "$wixPath\light.exe" -ext WixUIExtension "installer.wixobj" -out "PornPaster_Setup.msi"
+        if ($LASTEXITCODE -ne 0) { throw "Light.exe failed" }
+      
     - name: Create Release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: v1.0.0-${{ github.run_number }}
         name: Release v1.0.0-${{ github.run_number }}
-        files: |
-          publish/**
+        files: PornPaster_Setup.msi
         generate_release_notes: true
         draft: false
         prerelease: false

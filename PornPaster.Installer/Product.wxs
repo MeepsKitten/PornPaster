@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" 
+           Name="PornPaster" 
+           Language="1033" 
+           Version="1.0.0.0" 
+           Manufacturer="MeepsKitten" 
+           UpgradeCode="12345678-1234-1234-1234-123456789012">
+    <Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perUser" 
+             Platform="x64"/>
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."/>
+    <MediaTemplate EmbedCab="yes"/>
+
+    <Feature Id="ProductFeature" Title="PornPaster" Level="1">
+      <ComponentRef Id="ApplicationFiles"/>
+      <ComponentRef Id="ApplicationShortcut"/>
+      <ComponentRef Id="ApplicationShortcutDesktop"/>
+    </Feature>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="LocalAppDataFolder">
+        <Directory Id="APPLICATIONFOLDER" Name="PornPaster">
+          <Component Id="ApplicationFiles" Guid="*">
+            <File Id="PornPasterEXE" 
+                  Name="PornPaster.exe" 
+                  Source="$(var.BinDir)\PornPaster.exe" 
+                  KeyPath="yes"/>
+            <File Id="PornPasterDLL" 
+                  Name="PornPaster.dll" 
+                  Source="$(var.BinDir)\PornPaster.dll"/>
+            <File Id="PornPasterDepsJson" 
+                  Name="PornPaster.deps.json" 
+                  Source="$(var.BinDir)\PornPaster.deps.json"/>
+            <File Id="PornPasterRuntimeConfigJson" 
+                  Name="PornPaster.runtimeconfig.json" 
+                  Source="$(var.BinDir)\PornPaster.runtimeconfig.json"/>
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="PornPaster">
+          <Component Id="ApplicationShortcut" Guid="*">
+            <Shortcut Id="ApplicationStartMenuShortcut" 
+                      Name="PornPaster" 
+                      Description="Random Image Paster"
+                      Target="[APPLICATIONFOLDER]PornPaster.exe"
+                      WorkingDirectory="APPLICATIONFOLDER"/>
+            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+            <RegistryValue Root="HKCU" 
+                          Key="Software\MeepsKitten\PornPaster" 
+                          Name="installed" 
+                          Type="integer" 
+                          Value="1" 
+                          KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="ApplicationShortcutDesktop" Guid="*">
+          <Shortcut Id="ApplicationDesktopShortcut"
+                    Name="PornPaster"
+                    Description="Random Image Paster"
+                    Target="[APPLICATIONFOLDER]PornPaster.exe"
+                    WorkingDirectory="APPLICATIONFOLDER"/>
+          <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+          <RegistryValue Root="HKCU" 
+                        Key="Software\MeepsKitten\PornPaster" 
+                        Name="installed" 
+                        Type="integer" 
+                        Value="1" 
+                        KeyPath="yes"/>
+        </Component>
+      </Directory>
+    </Directory>
+
+    <UI>
+      <UIRef Id="WixUI_InstallDir"/>
+      <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONFOLDER"/>
+      <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="Thank you for installing PornPaster!"/>
+    </UI>
+  </Product>
+</Wix> 
