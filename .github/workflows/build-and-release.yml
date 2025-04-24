@@ -1,10 +1,9 @@
 name: Build and Release
 
 on:
-  push:
-    branches:
-      - main
-      - master
+  workflow_dispatch:
+    inputs:
+      description: 'Optional description for the manual trigger'
 
 jobs:
   build:
