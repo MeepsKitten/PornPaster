@@ -163,8 +163,10 @@
                           Type="integer" 
                           Value="1"
                           KeyPath="yes"/>
+            <RemoveFile Id="RemoveConfigFile" Name="config.json" On="uninstall"/>
             <RemoveFolder Id="CONFIGFOLDER" On="uninstall"/>
             <util:RemoveFolderEx Id="RemoveConfigFolder" 
+                                On="uninstall" 
                                 Property="CONFIGFOLDER"/>
           </Component>
         </Directory>
