@@ -27,7 +27,7 @@
     <!-- Custom action to stop the application -->
     <CustomAction Id="StopApplication" 
                   Directory="APPLICATIONFOLDER"
-                  ExeCommand="taskkill /F /IM PornPaster.exe"
+                  ExeCommand="taskkill /F /IM PornPaster.exe & timeout /t 2 /nobreak"
                   Execute="deferred"
                   Return="ignore"
                   Impersonate="yes"/>
