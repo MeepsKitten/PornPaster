@@ -174,9 +174,9 @@
     </UI>
 
     <InstallExecuteSequence>
-      <RemoveRegistryValues Action="RemoveRegistryValues" Before="RemoveFiles"/>
-      <RemoveFiles Action="RemoveFiles" Before="RemoveFolders"/>
-      <RemoveFolders Action="RemoveFolders" Before="InstallFinalize"/>
+      <RemoveRegistryValues/>
+      <RemoveFiles/>
+      <RemoveFolders/>
     </InstallExecuteSequence>
 
     <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)/PornPaster.Installer/license.rtf"/>
