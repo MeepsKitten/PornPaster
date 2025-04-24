@@ -10,7 +10,8 @@
     <Package InstallerVersion="200" 
              Compressed="yes" 
              InstallScope="perUser" 
-             Platform="x64"/>
+             Platform="x64"
+             InstallPrivileges="limited"/>
 
     <Property Id="ALLUSERS" Value="2"/>
 
