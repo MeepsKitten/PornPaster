@@ -43,7 +43,6 @@
     <!-- Add version information to registry -->
     <Property Id="ARPPRODUCTICON" Value="icon.ico"/>
     <Property Id="ARPHELPLINK" Value="https://github.com/MeepsKitten/PornPaster"/>
-    <Property Id="ARPPRODUCTICON" Value="icon.ico"/>
     <Property Id="ARPCONTACT" Value="MeepsKitten"/>
     <Property Id="ARPURLINFOABOUT" Value="https://github.com/MeepsKitten/PornPaster"/>
 
