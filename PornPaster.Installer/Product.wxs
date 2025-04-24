@@ -179,6 +179,6 @@
       <RemoveFolders Action="RemoveFolders" Before="InstallFinalize"/>
     </InstallExecuteSequence>
 
-    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)/license.rtf"/>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)/PornPaster.Installer/license.rtf"/>
   </Product>
 </Wix> 

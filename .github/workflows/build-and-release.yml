@@ -42,7 +42,7 @@ jobs:
         $env:Path = "$wixPath;" + $env:Path
         
         # Build the installer
-        & "$wixPath\candle.exe" -ext WixUtilExtension -dBinDir="$pwd\publish" "PornPaster.Installer\Product.wxs" -out "installer.wixobj"
+        & "$wixPath\candle.exe" -ext WixUtilExtension -dBinDir="$pwd\publish" -dProjectDir="$pwd" "PornPaster.Installer\Product.wxs" -out "installer.wixobj"
         if ($LASTEXITCODE -ne 0) { throw "Candle.exe failed" }
         
         & "$wixPath\light.exe" -ext WixUtilExtension -ext WixUIExtension "installer.wixobj" -out "PornPaster_Setup.msi"
