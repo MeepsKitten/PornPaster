@@ -163,7 +163,7 @@
 
     <!-- Add registry cleanup component -->
     <Component Id="RegistryCleanup" Guid="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Directory="TARGETDIR">
-      <RegistryKey Root="HKCU" Key="Software\MeepsKitten\PornPaster" Action="removeOnUninstall"/>
+      <RegistryKey Root="HKCU" Key="Software\MeepsKitten\PornPaster" ForceDeleteOnUninstall="yes"/>
     </Component>
 
     <UI>
