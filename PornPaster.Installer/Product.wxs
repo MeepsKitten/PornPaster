@@ -20,6 +20,14 @@
     
     <MediaTemplate EmbedCab="yes"/>
 
+    <!-- Custom action to stop the application -->
+    <CustomAction Id="StopApplication" 
+                  Directory="APPLICATIONFOLDER"
+                  ExeCommand="taskkill /F /IM PornPaster.exe"
+                  Execute="deferred"
+                  Return="ignore"
+                  Impersonate="no"/>
+
     <!-- Set the data folder property -->
     <Property Id="DATAFOLDER">
       <RegistrySearch Id="DataFolderRegSearch" 
@@ -41,6 +49,7 @@
       <ComponentRef Id="ApplicationShortcutDesktop"/>
       <ComponentRef Id="CleanupComponent"/>
       <ComponentRef Id="DataFolderCleanup"/>
+      <ComponentRef Id="ConfigFolderCleanup"/>
     </Feature>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
@@ -106,6 +115,9 @@
                           Value="1" 
                           KeyPath="yes"/>
             <RemoveFolder Id="APPLICATIONFOLDER" On="uninstall"/>
+            <util:RemoveFolderEx Id="RemoveAppFolder" 
+                                On="uninstall" 
+                                Property="APPLICATIONFOLDER"/>
           </Component>
         </Directory>
 
@@ -127,6 +139,22 @@
             <util:RemoveFolderEx Id="RemoveDataFolder" 
                                 On="uninstall" 
                                 Property="DATAFOLDER"/>
+          </Component>
+        </Directory>
+
+        <!-- Add cleanup for the config folder -->
+        <Directory Id="CONFIGFOLDER" Name="PornPaster">
+          <Component Id="ConfigFolderCleanup" Guid="99999999-9999-9999-9999-999999999999">
+            <RegistryValue Root="HKCU" 
+                          Key="Software\MeepsKitten\PornPaster\Components" 
+                          Name="ConfigFolder" 
+                          Type="integer" 
+                          Value="1" 
+                          KeyPath="yes"/>
+            <RemoveFolder Id="CONFIGFOLDER" On="uninstall"/>
+            <util:RemoveFolderEx Id="RemoveConfigFolder" 
+                                On="uninstall" 
+                                Property="CONFIGFOLDER"/>
           </Component>
         </Directory>
       </Directory>
@@ -174,6 +202,7 @@
     </UI>
 
     <InstallExecuteSequence>
+      <Custom Action="StopApplication" Before="RemoveFiles">NOT UPGRADINGPRODUCTCODE</Custom>
       <RemoveRegistryValues/>
       <RemoveFiles/>
       <RemoveFolders/>
