@@ -168,6 +168,10 @@
             <util:RemoveFolderEx Id="RemoveConfigFolder" 
                                 On="uninstall" 
                                 Property="CONFIGFOLDER"/>
+            <util:RemoveFolderEx Id="RemoveAppDataFolder" 
+                                On="uninstall" 
+                                Property="LocalAppDataFolder"
+                                Directory="PornPaster"/>
           </Component>
         </Directory>
       </Directory>
