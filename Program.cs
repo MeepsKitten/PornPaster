@@ -151,6 +151,7 @@ namespace PornPaster
                 }
                 trayIcon.Visible = false;
                 Application.Exit();
+                Process.GetCurrentProcess().Kill();
             }
         }
 
