@@ -18,7 +18,7 @@ namespace PornPaster.Models
         public Keys ViewKey { get; set; } = Keys.F12;
 
         private static readonly string ConfigPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "PornPaster",
             "config.json"
         );
