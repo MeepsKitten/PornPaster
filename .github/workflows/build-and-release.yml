@@ -3,7 +3,10 @@ name: Build and Release
 on:
   workflow_dispatch:
     inputs:
-      description: 'Optional description for the manual trigger'
+      description:
+        description: 'Optional description for the manual trigger'
+        required: false
+        default: 'Manual workflow trigger'
 
 jobs:
   build:
