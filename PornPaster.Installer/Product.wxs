@@ -165,9 +165,7 @@
                           KeyPath="yes"/>
             <RemoveFolder Id="CONFIGFOLDER" On="uninstall"/>
             <util:RemoveFolderEx Id="RemoveConfigFolder" 
-                                On="uninstall" 
-                                Property="CONFIGFOLDER"
-                                On="uninstall"/>
+                                Property="CONFIGFOLDER"/>
           </Component>
         </Directory>
       </Directory>
