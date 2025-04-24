@@ -94,12 +94,10 @@ namespace PornPaster
 
             void ShowConfig(object? sender, EventArgs e)
             {
-                using (var configForm = new ConfigForm(config))
+                var configWindow = new ConfigWindow(config);
+                if (configWindow.ShowDialog() == true)
                 {
-                    if (configForm.ShowDialog() == DialogResult.OK)
-                    {
-                        RegisterAllHotkeys();
-                    }
+                    RegisterAllHotkeys();
                 }
             }
 

@@ -1,0 +1,289 @@
+<Window x:Class="PornPaster.Forms.ConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PornPaster.Forms"
+        mc:Ignorable="d"
+        Title="PornPaster Configuration" Height="500" Width="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#FF1E1E1E"
+        WindowStyle="None"
+        AllowsTransparency="True">
+    
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#FF2D2D2D"/>
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
+            <Setter Property="BorderBrush" Value="#FF3E3E3E"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton" 
+                                        Grid.Column="2" 
+                                        IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="0,0,0,0">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}">
+                                            <Grid>
+                                                <Path x:Name="Arrow" 
+                                                      Fill="{TemplateBinding Foreground}"
+                                                      HorizontalAlignment="Right"
+                                                      VerticalAlignment="Center"
+                                                      Margin="0,0,5,0"
+                                                      Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter x:Name="ContentSite" 
+                                            IsHitTestVisible="False" 
+                                            Content="{TemplateBinding SelectionBoxItem}" 
+                                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
+                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" 
+                                            Margin="3,3,23,3" 
+                                            VerticalAlignment="Center" 
+                                            HorizontalAlignment="Left"/>
+                            <TextBox x:Name="PART_EditableTextBox" 
+                                    Style="{x:Null}" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center" 
+                                    Margin="3,3,23,3" 
+                                    Focusable="True" 
+                                    Background="Transparent" 
+                                    Visibility="Hidden" 
+                                    IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                            <Popup x:Name="Popup" 
+                                   Placement="Bottom" 
+                                   IsOpen="{TemplateBinding IsDropDownOpen}" 
+                                   AllowsTransparency="True" 
+                                   Focusable="False" 
+                                   PopupAnimation="None">
+                                <Grid x:Name="DropDown" 
+                                      SnapsToDevicePixels="True" 
+                                      MinWidth="{TemplateBinding ActualWidth}" 
+                                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" 
+                                            Background="#FF2D2D2D" 
+                                            BorderThickness="1" 
+                                            BorderBrush="#FF3E3E3E"/>
+                                    <ScrollViewer SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" 
+                                                   KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#FF2D2D2D"/>
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
+            <Setter Property="BorderBrush" Value="#FF3E3E3E"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5,0"/>
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="MinWidth" Value="80"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF0099FF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="TitleBarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF3E3E3E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="24"/>
+        </Style>
+        
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="#FF2D2D2D"/>
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
+            <Setter Property="BorderBrush" Value="#FF3E3E3E"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+        
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#FF007ACC"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF3E3E3E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Custom Title Bar -->
+        <Grid Grid.Row="0" Background="#FF2D2D2D" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Text="PornPaster Configuration" 
+                       Foreground="#FFE0E0E0" 
+                       VerticalAlignment="Center" 
+                       Margin="12,0,0,0"/>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button x:Name="MinimizeButton" 
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Width="46" 
+                        Height="32" 
+                        Click="MinimizeButton_Click">
+                    <TextBlock Text="─" 
+                               Foreground="#FFE0E0E0" 
+                               FontSize="16" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center"/>
+                </Button>
+                <Button x:Name="CloseButton" 
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Width="46" 
+                        Height="32" 
+                        Click="CloseButton_Click">
+                    <TextBlock Text="✕" 
+                               Foreground="#FFE0E0E0" 
+                               FontSize="16" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Margin="12,8,12,12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Hotkey Selection -->
+            <Label Grid.Row="0" Grid.Column="0" Content="Select Hotkey:"/>
+            <ComboBox x:Name="HotkeySelectorComboBox" Grid.Row="0" Grid.Column="1" Margin="0,0,8,0" SelectionChanged="HotkeySelectorComboBox_SelectionChanged"/>
+            <Button x:Name="AddHotkeyButton" Grid.Row="0" Grid.Column="2" Content="Add Hotkey" Margin="0,0,8,0" Click="AddHotkeyButton_Click"/>
+            <Button x:Name="RemoveHotkeyButton" Grid.Row="0" Grid.Column="3" Content="Remove" Click="RemoveHotkeyButton_Click"/>
+
+            <!-- Hotkey Name -->
+            <Label Grid.Row="2" Grid.Column="0" Content="Hotkey Name:"/>
+            <TextBox x:Name="HotkeyNameTextBox" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" TextChanged="HotkeyNameTextBox_TextChanged"/>
+
+            <!-- Hotkey Key -->
+            <Label Grid.Row="4" Grid.Column="0" Content="Key:"/>
+            <ComboBox x:Name="HotkeyComboBox" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" SelectionChanged="HotkeyComboBox_SelectionChanged"/>
+
+            <!-- Folder List -->
+            <ListBox x:Name="FolderListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" SelectionMode="Single"/>
+
+            <!-- Folder Buttons -->
+            <Button x:Name="AddButton" Grid.Row="8" Grid.Column="0" Content="Add Folder" HorizontalAlignment="Left" Click="AddButton_Click"/>
+            <Button x:Name="RemoveButton" Grid.Row="8" Grid.Column="1" Content="Remove" HorizontalAlignment="Left" Click="RemoveButton_Click"/>
+
+            <!-- Options -->
+            <CheckBox x:Name="SearchSubdirectoriesCheckBox" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Content="Search Subdirectories" 
+                      Checked="SearchSubdirectoriesCheckBox_Checked" Unchecked="SearchSubdirectoriesCheckBox_Unchecked"/>
+            <CheckBox x:Name="AutoPasteCheckBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2" Content="Auto Paste" 
+                      Checked="AutoPasteCheckBox_Checked" Unchecked="AutoPasteCheckBox_Unchecked"/>
+
+            <!-- Folder Selection Mode -->
+            <Label Grid.Row="12" Grid.Column="0" Content="Folder Selection Mode:"/>
+            <ComboBox x:Name="FolderSelectionModeComboBox" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="3" SelectionChanged="FolderSelectionModeComboBox_SelectionChanged"/>
+
+            <!-- Save Button -->
+            <Button x:Name="SaveButton" Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="2" Content="Save" Click="SaveButton_Click" 
+                    Background="#FF2D2D2D" BorderBrush="#FF3E3E3E" BorderThickness="1"/>
+        </Grid>
+    </Grid>
+</Window> 
