@@ -13,12 +13,17 @@ A Windows utility for quickly pasting random images from configured folders usin
 
 ## Installation
 
-### Option 1: Download Standalone Executable
+### Option 1: Use the Installer
+1. Go to the [Releases](https://github.com/YourUsername/PornPaster/releases) page
+2. Download the latest `PornPaster_Setup.exe`
+3. Run the installer and follow the on-screen instructions to complete the installation
+
+### Option 2: Download Standalone Executable (Legacy)
 1. Go to the [Releases](https://github.com/YourUsername/PornPaster/releases) page
 2. Download the latest `PornPaster.exe`
 3. Run the executable - no installation needed
 
-### Option 2: Build from Source
+### Option 3: Build from Source
 1. Clone the repository
 2. Make sure you have .NET 6.0 SDK installed
 3. Run `dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true`
