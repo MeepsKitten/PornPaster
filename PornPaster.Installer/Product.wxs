@@ -12,6 +12,8 @@
              InstallScope="perUser" 
              Platform="x64"/>
 
+    <Property Id="ALLUSERS" Value="2"/>
+
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."
                   Schedule="afterInstallValidate"
                   AllowDowngrades="no"
@@ -206,6 +208,12 @@
 
     <!-- Add registry cleanup component -->
     <Component Id="RegistryCleanup" Guid="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Directory="TARGETDIR">
+      <RegistryValue Root="HKCU" 
+                    Key="Software\MeepsKitten\PornPaster" 
+                    Name="RegistryCleanup" 
+                    Type="integer" 
+                    Value="1"
+                    KeyPath="yes"/>
       <RegistryKey Root="HKCU" Key="Software\MeepsKitten\PornPaster" ForceDeleteOnUninstall="yes"/>
     </Component>
 
