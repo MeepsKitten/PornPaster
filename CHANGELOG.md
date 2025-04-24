@@ -1,12 +1,11 @@
 # Changelog
+## [1.1.0]
 
-All notable changes to this project will be documented in this file.
-
-## [Unreleased]
+### Added
+- None
 
 ### Changed
-- Modernized configuration window with dark theme and improved UI/UX
-- Updated main program to work with new configuration system
+- Modernized Config UI
 
-### Removed
-- Old configuration form (ConfigForm.cs) 
+### Fixed
+- None

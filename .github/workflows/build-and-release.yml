@@ -28,6 +28,9 @@ jobs:
         $wixPath = Join-Path -Path $pwd -ChildPath "wix"
         echo "$wixPath" >> $env:GITHUB_PATH
         
+    - name: Clean
+      run: dotnet clean
+      
     - name: Restore dependencies
       run: dotnet restore
       
@@ -50,14 +53,22 @@ jobs:
         & "$wixPath\light.exe" -ext WixUtilExtension -ext WixUIExtension "installer.wixobj" -out "PornPaster_Setup.msi"
         if ($LASTEXITCODE -ne 0) { throw "Light.exe failed" }
       
+    - name: Get Version
+      id: get_version
+      shell: pwsh
+      run: |
+        $version = dotnet build -nologo -clp:NoSummary -p:GenerateFullPaths=true --getProperty:Version
+        echo "version=$version" >> $env:GITHUB_OUTPUT
+      
     - name: Create Release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: v1.0.0-${{ github.run_number }}
-        name: Release v1.0.0-${{ github.run_number }}
+        tag_name: v${{ steps.get_version.outputs.version }}
+        name: Release v${{ steps.get_version.outputs.version }}
+        body_path: CHANGELOG.md
         files: PornPaster_Setup.msi
-        generate_release_notes: true
+        generate_release_notes: false
         draft: false
         prerelease: false
       env:
