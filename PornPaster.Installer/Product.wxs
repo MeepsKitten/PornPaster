@@ -40,6 +40,13 @@
       NOT DATAFOLDER
     </SetProperty>
 
+    <!-- Add version information to registry -->
+    <Property Id="ARPPRODUCTICON" Value="icon.ico"/>
+    <Property Id="ARPHELPLINK" Value="https://github.com/MeepsKitten/PornPaster"/>
+    <Property Id="ARPPRODUCTICON" Value="icon.ico"/>
+    <Property Id="ARPCONTACT" Value="MeepsKitten"/>
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/MeepsKitten/PornPaster"/>
+
     <Feature Id="ProductFeature" Title="PornPaster" Level="1">
       <ComponentRef Id="MainExecutable"/>
       <ComponentRef Id="MainLibrary"/>
@@ -50,18 +57,24 @@
       <ComponentRef Id="CleanupComponent"/>
       <ComponentRef Id="DataFolderCleanup"/>
       <ComponentRef Id="ConfigFolderCleanup"/>
+      <ComponentRef Id="RegistryCleanup"/>
     </Feature>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="LocalAppDataFolder">
         <Directory Id="APPLICATIONFOLDER" Name="PornPaster">
+          <!-- Main application files with consolidated registry entries -->
           <Component Id="MainExecutable" Guid="33333333-3333-3333-3333-333333333333">
             <RegistryValue Root="HKCU" 
-                          Key="Software\MeepsKitten\PornPaster\Components" 
-                          Name="MainExecutable" 
-                          Type="integer" 
-                          Value="1" 
-                          KeyPath="yes"/>
+                          Key="Software\MeepsKitten\PornPaster" 
+                          Name="Version" 
+                          Type="string" 
+                          Value="[ProductVersion]"/>
+            <RegistryValue Root="HKCU" 
+                          Key="Software\MeepsKitten\PornPaster" 
+                          Name="InstallPath" 
+                          Type="string" 
+                          Value="[APPLICATIONFOLDER]"/>
             <File Id="PornPasterEXE" 
                   Name="PornPaster.exe" 
                   Source="$(var.BinDir)\PornPaster.exe"/>
@@ -69,12 +82,6 @@
           </Component>
           
           <Component Id="MainLibrary" Guid="44444444-4444-4444-4444-444444444444">
-            <RegistryValue Root="HKCU" 
-                          Key="Software\MeepsKitten\PornPaster\Components" 
-                          Name="MainLibrary" 
-                          Type="integer" 
-                          Value="1" 
-                          KeyPath="yes"/>
             <File Id="PornPasterDLL" 
                   Name="PornPaster.dll" 
                   Source="$(var.BinDir)\PornPaster.dll"/>
@@ -82,12 +89,6 @@
           </Component>
           
           <Component Id="DepsJson" Guid="55555555-5555-5555-5555-555555555555">
-            <RegistryValue Root="HKCU" 
-                          Key="Software\MeepsKitten\PornPaster\Components" 
-                          Name="DepsJson" 
-                          Type="integer" 
-                          Value="1" 
-                          KeyPath="yes"/>
             <File Id="PornPasterDepsJson" 
                   Name="PornPaster.deps.json" 
                   Source="$(var.BinDir)\PornPaster.deps.json"/>
@@ -95,12 +96,6 @@
           </Component>
           
           <Component Id="RuntimeConfig" Guid="66666666-6666-6666-6666-666666666666">
-            <RegistryValue Root="HKCU" 
-                          Key="Software\MeepsKitten\PornPaster\Components" 
-                          Name="RuntimeConfig" 
-                          Type="integer" 
-                          Value="1" 
-                          KeyPath="yes"/>
             <File Id="PornPasterRuntimeConfigJson" 
                   Name="PornPaster.runtimeconfig.json" 
                   Source="$(var.BinDir)\PornPaster.runtimeconfig.json"/>
@@ -108,12 +103,6 @@
           </Component>
 
           <Component Id="CleanupComponent" Guid="77777777-7777-7777-7777-777777777777">
-            <RegistryValue Root="HKCU" 
-                          Key="Software\MeepsKitten\PornPaster\Components" 
-                          Name="Cleanup" 
-                          Type="integer" 
-                          Value="1" 
-                          KeyPath="yes"/>
             <RemoveFolder Id="APPLICATIONFOLDER" On="uninstall"/>
             <util:RemoveFolderEx Id="RemoveAppFolder" 
                                 On="uninstall" 
@@ -124,12 +113,6 @@
         <!-- Add cleanup for the app's data folder -->
         <Directory Id="DATAFOLDER" Name="PornPaster_Data">
           <Component Id="DataFolderCleanup" Guid="88888888-8888-8888-8888-888888888888">
-            <RegistryValue Root="HKCU" 
-                          Key="Software\MeepsKitten\PornPaster\Components" 
-                          Name="DataFolder" 
-                          Type="integer" 
-                          Value="1" 
-                          KeyPath="yes"/>
             <RegistryValue Root="HKCU"
                           Key="Software\MeepsKitten\PornPaster"
                           Name="DataPath"
@@ -145,12 +128,6 @@
         <!-- Add cleanup for the config folder -->
         <Directory Id="CONFIGFOLDER" Name="PornPaster">
           <Component Id="ConfigFolderCleanup" Guid="99999999-9999-9999-9999-999999999999">
-            <RegistryValue Root="HKCU" 
-                          Key="Software\MeepsKitten\PornPaster\Components" 
-                          Name="ConfigFolder" 
-                          Type="integer" 
-                          Value="1" 
-                          KeyPath="yes"/>
             <RemoveFolder Id="CONFIGFOLDER" On="uninstall"/>
             <util:RemoveFolderEx Id="RemoveConfigFolder" 
                                 On="uninstall" 
@@ -168,12 +145,6 @@
                       Target="[APPLICATIONFOLDER]PornPaster.exe"
                       WorkingDirectory="APPLICATIONFOLDER"/>
             <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-            <RegistryValue Root="HKCU" 
-                          Key="Software\MeepsKitten\PornPaster\Components" 
-                          Name="StartMenuShortcut" 
-                          Type="integer" 
-                          Value="1" 
-                          KeyPath="yes"/>
           </Component>
         </Directory>
       </Directory>
@@ -186,15 +157,14 @@
                     Target="[APPLICATIONFOLDER]PornPaster.exe"
                     WorkingDirectory="APPLICATIONFOLDER"/>
           <RemoveFolder Id="DesktopFolder" On="uninstall"/>
-          <RegistryValue Root="HKCU" 
-                        Key="Software\MeepsKitten\PornPaster\Components" 
-                        Name="DesktopShortcut" 
-                        Type="integer" 
-                        Value="1" 
-                        KeyPath="yes"/>
         </Component>
       </Directory>
     </Directory>
+
+    <!-- Add registry cleanup component -->
+    <Component Id="RegistryCleanup" Guid="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Directory="TARGETDIR">
+      <RegistryKey Root="HKCU" Key="Software\MeepsKitten\PornPaster" Action="removeOnUninstall"/>
+    </Component>
 
     <UI>
       <UIRef Id="WixUI_Minimal"/>
