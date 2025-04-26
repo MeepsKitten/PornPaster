@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PornPaster.Forms"
+        xmlns:sys="clr-namespace:System.Windows.Data;assembly=PresentationFramework"
         mc:Ignorable="d"
         Title="PornPaster Configuration" Height="480" Width="500"
         WindowStartupLocation="CenterScreen"
@@ -367,7 +368,31 @@
             </Grid>
 
             <CheckBox x:Name="AutoSendCheckBox" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="4" Content="Auto Send (Press Enter)" 
-                      Checked="AutoSendCheckBox_Checked" Unchecked="AutoSendCheckBox_Unchecked"/>
+                      Checked="AutoSendCheckBox_Checked" Unchecked="AutoSendCheckBox_Unchecked">
+                <CheckBox.Style>
+                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter Property="Grid.ColumnSpan" Value="2"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </CheckBox.Style>
+            </CheckBox>
+            <StackPanel Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=AutoSendCheckBox}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Label Content="Delay (ms):" VerticalAlignment="Center" Margin="8,0,4,0"/>
+                <TextBox x:Name="AutoSendDelayTextBox" Width="60" TextChanged="AutoSendDelayTextBox_TextChanged"/>
+            </StackPanel>
 
             <!-- Folder Selection Mode -->
             <DockPanel Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="4" LastChildFill="True">

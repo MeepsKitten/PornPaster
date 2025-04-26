@@ -103,6 +103,7 @@ namespace PornPaster.Forms
                 SearchSubdirectoriesCheckBox.IsChecked = currentHotkey.SearchSubdirectories;
                 AutoPasteCheckBox.IsChecked = currentHotkey.AutoPaste;
                 AutoSendCheckBox.IsChecked = currentHotkey.AutoSend;
+                AutoSendDelayTextBox.Text = currentHotkey.AutoSendDelay.ToString();
                 FolderSelectionModeComboBox.SelectedItem = currentHotkey.FolderSelectionMode.ToString();
 
                 FolderListBox.Items.Clear();
@@ -383,6 +384,21 @@ namespace PornPaster.Forms
         private void TitleBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void AutoSendDelayTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            try
+            {
+                if (currentHotkey != null && !isUpdatingControls && int.TryParse(AutoSendDelayTextBox.Text, out int delay))
+                {
+                    currentHotkey.AutoSendDelay = delay;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"Error updating auto send delay: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 } 

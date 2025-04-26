@@ -130,7 +130,7 @@ namespace PornPaster
                             // If auto-send is enabled, wait a short delay and send Enter key
                             if (hotkey.AutoSend)
                             {
-                                System.Threading.Thread.Sleep(500); // 300ms delay
+                                System.Threading.Thread.Sleep(hotkey.AutoSendDelay);
                                 SendKeys.SendWait("{ENTER}");
                             }
                         }

@@ -14,6 +14,7 @@ namespace PornPaster.Models
         public bool IsPaused { get; set; } = false;
         public bool AutoPaste { get; set; } = true;
         public bool AutoSend { get; set; } = false;
+        public int AutoSendDelay { get; set; } = 500;
         private int lastFolderIndex = -1;
 
         public string GetNextFolder()
