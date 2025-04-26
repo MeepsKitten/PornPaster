@@ -1,4 +1,15 @@
 # Changelog
+## [1.1.1]
+
+### Added
+- None
+
+### Changed
+- None
+
+### Fixed
+- Fixed configuration of extra hotkeys
+
 ## [1.1.0]
 
 ### Added

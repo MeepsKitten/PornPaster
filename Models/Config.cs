@@ -62,7 +62,7 @@ namespace PornPaster.Models
         public void Save()
         {
             var directory = Path.GetDirectoryName(ConfigPath);
-            if (!Directory.Exists(directory))
+            if (directory != null && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }

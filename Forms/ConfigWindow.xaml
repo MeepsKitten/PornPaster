@@ -104,6 +104,15 @@
             <Setter Property="Height" Value="24"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#FF007ACC"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#FF007ACC"/>
+                    <Setter Property="Background" Value="#FF363636"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         
         <Style TargetType="Button">
@@ -112,50 +121,105 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Height" Value="24"/>
             <Setter Property="MinWidth" Value="80"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
+                        <Border x:Name="border" Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="2">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF0099FF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF006BB3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FF4D4D4D"/>
+                                <Setter Property="Foreground" Value="#FF999999"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FF0099FF"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
         
         <Style x:Key="TitleBarButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#FFE0E0E0"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
+                        <Border x:Name="border" Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF3E3E3E"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF4D4D4D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FF3E3E3E"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
         
         <Style TargetType="CheckBox">
             <Setter Property="Foreground" Value="#FFE0E0E0"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Height" Value="24"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid x:Name="templateRoot" Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="checkBoxBorder" 
+                                    Background="#FF2D2D2D"
+                                    BorderBrush="#FF3E3E3E"
+                                    BorderThickness="1"
+                                    Width="16"
+                                    Height="16"
+                                    Margin="0,0,4,0">
+                                <Viewbox Width="12" Height="12">
+                                    <Path x:Name="checkMark"
+                                          Data="M 0,5 L 3,8 L 8,2"
+                                          Stroke="#FF007ACC"
+                                          StrokeThickness="1.5"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Visibility="Collapsed"/>
+                                </Viewbox>
+                            </Border>
+                            <ContentPresenter Grid.Column="1" 
+                                            VerticalAlignment="Center"
+                                            Content="{TemplateBinding Content}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="checkMark" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="checkBoxBorder" Property="Background" Value="#FF363636"/>
+                                <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="#FF007ACC"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="#FF007ACC"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         
         <Style TargetType="ListBox">
@@ -164,11 +228,20 @@
             <Setter Property="BorderBrush" Value="#FF3E3E3E"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Margin" Value="0,5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#FF007ACC"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#FF007ACC"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         
         <Style TargetType="ListBoxItem">
             <Setter Property="Padding" Value="5,2"/>
             <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="#FF007ACC"/>
@@ -252,7 +325,11 @@
 
             <!-- Hotkey Selection -->
             <Label Grid.Row="0" Grid.Column="0" Content="Select Hotkey:"/>
-            <ComboBox x:Name="HotkeySelectorComboBox" Grid.Row="0" Grid.Column="1" Margin="0,0,8,0" SelectionChanged="HotkeySelectorComboBox_SelectionChanged"/>
+            <ComboBox x:Name="HotkeySelectorComboBox" 
+                     Grid.Row="0" 
+                     Grid.Column="1" 
+                     Margin="0,0,8,0"
+                     SelectionChanged="HotkeySelectorComboBox_SelectionChanged"/>
             <Button x:Name="AddHotkeyButton" Grid.Row="0" Grid.Column="2" Content="Add Hotkey" Margin="0,0,8,0" Click="AddHotkeyButton_Click"/>
             <Button x:Name="RemoveHotkeyButton" Grid.Row="0" Grid.Column="3" Content="Remove" Click="RemoveHotkeyButton_Click"/>
 
