@@ -13,6 +13,7 @@ namespace PornPaster.Models
         public FolderSelectionMode FolderSelectionMode { get; set; } = FolderSelectionMode.Randomly;
         public bool IsPaused { get; set; } = false;
         public bool AutoPaste { get; set; } = true;
+        public bool AutoSend { get; set; } = false;
         private int lastFolderIndex = -1;
 
         public string GetNextFolder()

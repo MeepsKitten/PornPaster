@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PornPaster.Forms"
         mc:Ignorable="d"
-        Title="PornPaster Configuration" Height="500" Width="500"
+        Title="PornPaster Configuration" Height="480" Width="500"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="#FF1E1E1E"
@@ -253,14 +253,9 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!-- Custom Title Bar -->
-        <Grid Grid.Row="0" Background="#FF2D2D2D" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+    <DockPanel LastChildFill="True">
+        <!-- Title Bar -->
+        <Grid DockPanel.Dock="Top" Height="32" Background="#FF2D2D2D" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -297,23 +292,31 @@
             </StackPanel>
         </Grid>
 
+        <!-- Footer -->
+        <Grid DockPanel.Dock="Bottom" Height="48" Background="#FF2D2D2D">
+            <Button x:Name="SaveButton" Content="Save" Click="SaveButton_Click" 
+                    Background="#FF007ACC" BorderThickness="0" 
+                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                    Margin="0,0,12,0" Padding="24,6"/>
+        </Grid>
+
         <!-- Main Content -->
-        <Grid Grid.Row="1" Margin="12,8,12,12">
+        <Grid Margin="12,8,12,8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="12"/>
+                <RowDefinition Height="8"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="12"/>
+                <RowDefinition Height="8"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="12"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="12"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="140"/>
+                <RowDefinition Height="8"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="12"/>
+                <RowDefinition Height="16"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="12"/>
+                <RowDefinition Height="8"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="12"/>
+                <RowDefinition Height="16"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -345,22 +348,32 @@
             <ListBox x:Name="FolderListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" SelectionMode="Single"/>
 
             <!-- Folder Buttons -->
-            <Button x:Name="AddButton" Grid.Row="8" Grid.Column="0" Content="Add Folder" HorizontalAlignment="Left" Click="AddButton_Click"/>
-            <Button x:Name="RemoveButton" Grid.Row="8" Grid.Column="1" Content="Remove" HorizontalAlignment="Left" Click="RemoveButton_Click"/>
+            <StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button x:Name="AddButton" Content="Add Folder" Click="AddButton_Click" Margin="0,0,8,0"/>
+                <Button x:Name="RemoveButton" Content="Remove" Click="RemoveButton_Click"/>
+            </StackPanel>
 
             <!-- Options -->
-            <CheckBox x:Name="SearchSubdirectoriesCheckBox" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Content="Search Subdirectories" 
-                      Checked="SearchSubdirectoriesCheckBox_Checked" Unchecked="SearchSubdirectoriesCheckBox_Unchecked"/>
-            <CheckBox x:Name="AutoPasteCheckBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2" Content="Auto Paste" 
-                      Checked="AutoPasteCheckBox_Checked" Unchecked="AutoPasteCheckBox_Unchecked"/>
+            <Grid Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <CheckBox x:Name="SearchSubdirectoriesCheckBox" Grid.Column="0" Content="Search Subdirectories" 
+                          Checked="SearchSubdirectoriesCheckBox_Checked" Unchecked="SearchSubdirectoriesCheckBox_Unchecked"/>
+                <CheckBox x:Name="AutoPasteCheckBox" Grid.Column="1" Content="Auto Paste" 
+                          Checked="AutoPasteCheckBox_Checked" Unchecked="AutoPasteCheckBox_Unchecked"/>
+            </Grid>
+
+            <CheckBox x:Name="AutoSendCheckBox" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="4" Content="Auto Send (Press Enter)" 
+                      Checked="AutoSendCheckBox_Checked" Unchecked="AutoSendCheckBox_Unchecked"/>
 
             <!-- Folder Selection Mode -->
-            <Label Grid.Row="12" Grid.Column="0" Content="Folder Selection Mode:"/>
-            <ComboBox x:Name="FolderSelectionModeComboBox" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="3" SelectionChanged="FolderSelectionModeComboBox_SelectionChanged"/>
-
-            <!-- Save Button -->
-            <Button x:Name="SaveButton" Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="2" Content="Save" Click="SaveButton_Click" 
-                    Background="#FF2D2D2D" BorderBrush="#FF3E3E3E" BorderThickness="1"/>
+            <DockPanel Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="4" LastChildFill="True">
+                <Label Content="Folder Selection Mode:" DockPanel.Dock="Left" Foreground="#FFE0E0E0" VerticalAlignment="Center"/>
+                <ComboBox x:Name="FolderSelectionModeComboBox" Margin="8,0,0,0" SelectionChanged="FolderSelectionModeComboBox_SelectionChanged"/>
+            </DockPanel>
         </Grid>
-    </Grid>
+    </DockPanel>
 </Window> 

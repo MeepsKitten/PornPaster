@@ -126,6 +126,13 @@ namespace PornPaster
                             var foregroundWindow = GetForegroundWindow();
                             SetForegroundWindow(foregroundWindow);
                             SendKeys.SendWait("^v");
+
+                            // If auto-send is enabled, wait a short delay and send Enter key
+                            if (hotkey.AutoSend)
+                            {
+                                System.Threading.Thread.Sleep(500); // 300ms delay
+                                SendKeys.SendWait("{ENTER}");
+                            }
                         }
                     }
                     else

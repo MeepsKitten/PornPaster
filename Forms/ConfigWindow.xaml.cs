@@ -102,6 +102,7 @@ namespace PornPaster.Forms
                 HotkeyComboBox.SelectedItem = currentHotkey.Key.ToString();
                 SearchSubdirectoriesCheckBox.IsChecked = currentHotkey.SearchSubdirectories;
                 AutoPasteCheckBox.IsChecked = currentHotkey.AutoPaste;
+                AutoSendCheckBox.IsChecked = currentHotkey.AutoSend;
                 FolderSelectionModeComboBox.SelectedItem = currentHotkey.FolderSelectionMode.ToString();
 
                 FolderListBox.Items.Clear();
@@ -304,6 +305,36 @@ namespace PornPaster.Forms
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show($"Error updating auto paste: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void AutoSendCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (currentHotkey != null && !isUpdatingControls)
+                {
+                    currentHotkey.AutoSend = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"Error updating auto send: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void AutoSendCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (currentHotkey != null && !isUpdatingControls)
+                {
+                    currentHotkey.AutoSend = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"Error updating auto send: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
