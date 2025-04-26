@@ -1,4 +1,15 @@
 # Changelog
+## [1.1.2]
+
+### Added
+- Auto-send feature for automatic message sending
+
+### Changed
+- None
+
+### Fixed
+- None
+
 ## [1.1.1]
 
 ### Added
